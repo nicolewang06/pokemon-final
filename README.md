@@ -4,4 +4,5 @@ API's are a collection of data that can be very long and difficult to read. Usin
 ## Target end user:
 Anyone who loves Pokemon and wants to see how I used JavaScript and CSS.
 
-<img src="./p3_wireframe.png" alt="wireframe" />
+## Wireframe:
+<img src="./images/p3_wireframe.png" alt="wireframe" />
