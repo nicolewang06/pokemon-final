@@ -17,7 +17,7 @@ class Play extends React.Component {
 
   async componentDidMount() {
     try {
-      const random = Math.floor(Math.random() * 152)
+      const random = Math.floor(Math.random() * 899)
         const res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${random}`);
         this.setState({ plays: res.data })
     } catch(err) {

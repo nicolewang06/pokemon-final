@@ -5,7 +5,7 @@ class About extends Component{
       return(
         <div id="aboutContainer">
           <div id="aboutContent">
-          <h2 id="aboutTitle">&nbsp;About My Pok&#233;mon API React App&nbsp;</h2><br></br><br></br>
+          <h2 id="aboutTitle">&nbsp;About My Pok&#233;mon Full Stack CRUD App&nbsp;</h2><br></br><br></br>
     
             <div id="aboutPlayContainer">
               <div className="aboutTitles">Play</div><br></br>
@@ -36,8 +36,7 @@ class About extends Component{
             <div className="aboutTitles">Pok&#233;mon</div><br></br>
               <div className="aboutContents">
                 <ul>
-                  <li>Pok&#233;mon listed are only from Generation I</li><br></br>
-                  <li>Can you "catch" all 151 Pok&#233;mon from the Play page ?</li>
+                  <li>Gotta Catch 'em All !! How many Pok&#233;mon can you "catch" from the Play page ?</li>
                 </ul>
               </div>
             </div>
