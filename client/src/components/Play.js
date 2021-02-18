@@ -30,7 +30,7 @@ class Play extends React.Component {
     
     if (this.state.plays.name === e.target.value) {
       answer.style.filter = "brightness(100%)";
-      alert("\nYou caught " + allCaps + " !! \n\nCheck out the Pokemon page to give your new friend a nickname \n\n--refresh page to encounter another Pokemon--");
+      alert("💥 You caught " + allCaps + " !! 🎉\n\nCheck out the Pokemon page to give your new friend a nickname \n\n--refresh page to encounter another Pokemon--");
     //   console.log(this.state)
     //   console.log(this.state.plays.name)
     //   console.log(this.state.plays.id)

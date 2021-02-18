@@ -32,15 +32,14 @@ class Pokemon extends Component {
 
       async editPokemon(id) {
         try {
-          //const res = await axios.patch('http://localhost:8080/pokemon/' + id);
+          const res = await axios.patch('http://localhost:8080/pokemon/' + id);
           console.log(id);
           //alert("give nickname");
-          var x = document.getElementById("myDIV");
-          if (x.style.display === "none") {
-            x.style.display = "block";
-          } else {
-            x.style.display = "none";
-          }
+          let edit = document.getElementById("myDIV");
+          let name = document.getElementById("pokemonName");
+          edit.style.display = "block";
+          name.style.display = "none";
+          
         } catch(e) {
           console.error(e, e.message);
         }
@@ -65,7 +64,7 @@ class Pokemon extends Component {
                                 
                                 <div id="pokemonNameContent">
                                     <div id="edit" onClick={ (e) => this.editPokemon(data.id) }>✏️</div>
-                                    <div id="myDIV"><input type="text" defaultValue={data.pokemonName}/></div>
+                                    <div id="myDIV"><input type="text" size="10" defaultValue={data.pokemonName}/><button>update</button></div>
                                     <div id="pokemonName">
                                         {data.pokemonName}<br></br>
                                         {data.nickname}
