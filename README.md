@@ -9,4 +9,3 @@ will use heroku
 
 ## Wireframe:
 <img src="./images/p3_wireframe.png" alt="wireframe" />
-<img src="./images/p3_wireframe2.png" alt="wireframe" />
