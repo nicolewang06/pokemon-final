@@ -15,10 +15,13 @@ public class Pokemon {
     private String pokemonName;
 
     @Column
-    private Boolean captured;
+    private Integer pokemonNum;
 
     @Column
     private String nickname;
+
+    @Column
+    private String imageUrl;
 
     public Pokemon() {}
 
@@ -34,16 +37,28 @@ public class Pokemon {
     public void setPokemonName(String pokemonName) {
         this.pokemonName = pokemonName;
     }
-    public Boolean getCaptured() {
-        return captured;
+    public Integer getPokemonNum() {
+        return pokemonNum;
     }
-    public void setCaptured(Boolean captured) {
-        this.captured = captured;
+    public void getPokemonNum(Integer pokemonNum) {
+        this.pokemonNum = pokemonNum;
     }
     public String getNickname() {
         return nickname;
     }
     public void setNickname(String nickName) {
         this.nickname = nickname;
+    }
+
+    public void setPokemonNum(Integer pokemonNum) {
+        this.pokemonNum = pokemonNum;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

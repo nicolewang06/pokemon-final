@@ -15,6 +15,24 @@ import Pokemon from './components/Pokemon'
 import Play from './components/Play'
   
 class App extends React.Component {
+  constructor() {
+    super();
+
+    this.state = { data: [] }
+  }
+
+  async componentDidMount() {
+    try{
+      const res = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=151')
+      //const resDatabase = await axios.get('http://localhost:8080/pokemon')
+      this.setState( { data: res.data.results } )
+      // this.setState( { pData: resDatabase.data.results})
+      
+    } catch(error) {
+      console.error(error.message);
+    }
+  }
+
   render() {
      return (
       <Router>
@@ -25,10 +43,10 @@ class App extends React.Component {
              <About />
            </Route>
            <Route path="/pokedex"> 
-             <Pokedex />
+             <Pokedex pokemonList={this.state.data}/>
           </Route>
           <Route path="/pokemon">
-            <Pokemon />
+            <Pokemon /*pokemonCard={this.state.pData}*/ />
           </Route>
           <Route path="/play">
             <Play />

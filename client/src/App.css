@@ -188,13 +188,13 @@ a:hover{
 
 }
 
-#pokemonImage{
+/* #pokemonImage{
   filter: brightness(10%);
 }
 
 #pokemonImage:hover{
   filter: none;
-}
+} */
 
 .pokemonContent {
   text-align: center;

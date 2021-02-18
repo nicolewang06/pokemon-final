@@ -5,26 +5,25 @@ const img = "https://pokeres.bastionbot.org/images/pokemon/"
 
 class Play extends React.Component {
     
-    constructor(props) {
-        super(props);
-        this.state = {
-          plays: [],
-          results: [],
-          score: [],
-          selected: []
-        }
-      }
-
-    async componentDidMount() {
-       try {
-        const random = Math.floor(Math.random() * 152)
-           const res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${random}`);
-           this.setState({ plays: res.data })
-
-      } catch(err) {
-          console.error(err.message);
+  constructor(props) {
+    super(props);
+    this.state = {
+      plays: [],
+      results: [],
+      score: [],
+      selected: []
+    }
   }
-}      
+
+  async componentDidMount() {
+    try {
+      const random = Math.floor(Math.random() * 152)
+        const res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${random}`);
+        this.setState({ plays: res.data })
+    } catch(err) {
+        console.error(err.message);
+    }
+  }      
   async getValue(e) {
     const answer = document.querySelector('#playImage');
     const allCaps = this.state.plays.name.toUpperCase();
@@ -32,8 +31,16 @@ class Play extends React.Component {
     if (this.state.plays.name === e.target.value) {
       answer.style.filter = "brightness(100%)";
       alert("CORRECT!! You caught " + allCaps + "!!  Check out the Pokemon page to give your new friend a nickname");
-      
-      
+      console.log(this.state)
+      console.log(this.state.plays.name)
+      console.log(this.state.plays.id)
+
+      // Image,  number, nickname, id
+      const res = await axios.post('http://localhost:8080/pokemon', {
+        pokemonNum: this.state.plays.id,
+        pokemonName: this.state.plays.name,
+        imageUrl: `${img}${this.state.plays.id}`
+      });
     } else {
       alert("oops, wrong guess. try again");
     }
