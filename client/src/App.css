@@ -32,11 +32,10 @@ body {
 
 .header {
   height: 35px;
-  width: 100%;
   background-color: red;
   border-top: 2px solid red;
   border-bottom: 2px solid red;
-  
+  width: 100%;
 }
 
 #banner{
@@ -69,6 +68,7 @@ body {
   align-items: center;
   justify-content: center;  
   font-family: 'Comfortaa', cursive;
+  width: 100%;
 }
 
 .footer {
@@ -236,6 +236,16 @@ a:hover{
 
 #delete{
   text-align: right;
+}
+
+#delete:hover{
+  cursor: crosshair;
+  font-size: larger;
+}
+
+#edit:hover{
+  cursor: crosshair;
+  font-size: larger;
 }
 
 
