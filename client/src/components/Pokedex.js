@@ -34,7 +34,7 @@ class Pokedex extends Component {
       try{
         const randoms = Math.floor(Math.random() * 899)
         const res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${randoms}`)
-        console.log(res)
+        //console.log(res)
         this.setState( { data: res.data } )
       } catch(error) {
         console.error(error.message);
