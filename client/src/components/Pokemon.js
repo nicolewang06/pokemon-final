@@ -32,13 +32,7 @@ class Pokemon extends Component {
     async componentDidMount() {
       try{
       const {data} = await axios.get('http://localhost:8080/pokemon')
-      
       this.setState ( { data: data } )
-
-      console.log(data)
-    //   console.log(this.state.data[0].pokemonNum)
-    //   console.log(this.state.data[0].pokemonName)
-    //   console.log(this.state.data[0].imageUrl)
     } catch(error) {
       console.error(error.message);
     }
@@ -49,26 +43,24 @@ class Pokemon extends Component {
 
       
 return(
+<div id = "holder">
+    <div className="pokemonCardContainer">  
+            {
+            this.state.data && this.state.data.map(data => (
+                
+                <div className="pokemonCard">  
+                    <div className="pokemonBackground" key={data.id}>
+                        <img id="pokemonImage" src= {data.imageUrl + ".png"} alt="" width="150px" />
+                        <div id="edit">edit</div><div id="delete">delete</div>
+                    </div> 
 
-
-<div className="pokemonCardContainer">
-             
-        {
-        this.state.data && this.state.data.map(data => (
-            
-            <div className="pokemonCard">  
-                <div className="pokemonBackground"  key={data.id}>
-                    <img id="pokemonImage" src= {data.imageUrl + ".png"} alt="" width="150px" />
-                </div> 
-
-                <div className="pokemonContent">
-                <h2 id="pokemonName">#{data.id} {data.pokemonName}</h2>
+                    <div className="pokemonContent">
+                    <h2 id="pokemonName">#{data.pokemonNum} {data.pokemonName}</h2>
+                    </div>
                 </div>
-            </div>
-        ))
-        }
-
-    
+            ))
+            }
+    </div>
 </div>
 )
 }

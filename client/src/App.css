@@ -157,6 +157,7 @@ a:hover{
 
 .pokemonCardContainer {
   padding: 5px;
+  display: flex;
 }
 
 .pokemonCard {
@@ -165,6 +166,7 @@ a:hover{
   border-radius: 8px;
   padding: 10px;
   width: 220px;
+  margin: 5px;
   /* -webkit-filter: grayscale(100%);
   -moz-filter: grayscale(100%);
   -ms-filter: grayscale(100%);
@@ -173,12 +175,12 @@ a:hover{
 }
 
 .pokemonCard:hover{
-  animation: bounce 0.5s linear;
+  /* animation: bounce 0.5s linear;
   -webkit-filter: none;
   -moz-filter: none;
   -ms-filter: none;
   filter: none;
-  
+   */
 }
 
 .pokemonBackground {
@@ -188,13 +190,17 @@ a:hover{
 
 }
 
-/* #pokemonImage{
-  filter: brightness(10%);
+#pokemonImage{
+  filter: brightness(50%);
 }
 
 #pokemonImage:hover{
   filter: none;
-} */
+  animation: bounce 0.5s linear;
+  -webkit-filter: none;
+  -moz-filter: none;
+  -ms-filter: none;
+}
 
 .pokemonContent {
   text-align: center;
