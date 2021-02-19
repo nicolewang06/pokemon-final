@@ -24,7 +24,7 @@ class Pokemon extends Component {
         try {
           const res = await axios.delete('http://localhost:8080/pokemon/' + id);
           //console.log(res.data);
-          alert("we'll meet again");
+          //alert("we'll meet again");
           const updateRes = await axios.get('http://localhost:8080/pokemon/');
             this.setState({ data: updateRes.data});
         } catch(e) {
