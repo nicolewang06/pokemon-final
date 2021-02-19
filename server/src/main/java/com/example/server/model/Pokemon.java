@@ -46,7 +46,7 @@ public class Pokemon {
     public String getNickname() {
         return nickname;
     }
-    public void setNickname(String nickName) {
+    public void setNickname(String nickname) {
         this.nickname = nickname;
     }
 
