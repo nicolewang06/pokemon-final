@@ -68,7 +68,7 @@ class Pokemon extends Component {
             <div className="pokemonCardContainer">  
               {
               this.state.data && this.state.data.map(data => (
-                  <SinglePokemon data = {data} />
+                  <SinglePokemon data = {data} deletePokemon = {this.deletePokemon} />
                   
               ))
               }
@@ -94,6 +94,7 @@ class SinglePokemon extends Component{
     
     this.setState({isEditToggled: true})
 
+
   }
 
 
@@ -102,13 +103,12 @@ class SinglePokemon extends Component{
 
       <div className="pokemonCard" key={this.props.data.id}>  
                       <div className="pokemonBackground" >
-                          <form><div id="delete" onClick={ (e) => this.deletePokemon(this.data.id) }>❌</div></form>
+                          <form><div id="delete" onClick={ (e) => this.props.deletePokemon(this.props.data.id) }>❌</div></form>
                           <img id="pokemonImage" src= {this.props.data.imageUrl + ".png"} alt="" width="150px" />
                           <div id="pokemonNum">#{this.props.data.pokemonNum}</div>
                       </div> 
 
                       <div className="pokemonContent">
-                          
                           <div id="pokemonNameContent">
                               <div id="edit" onClick={ (e) => this.toggleEdit() }>
                                 ✏️

@@ -46,26 +46,6 @@ class Play extends React.Component {
       this.componentDidMount();
       answer.style.filter = "brightness(0%)";
     }
-}
-
-  async guess(e) {
-    const answer = document.querySelector('#playImage');
-    const allCaps = this.state.details.name.toUpperCase();
-    
-    if (this.state.details.name === e.target.value) {
-      answer.style.filter = "brightness(100%)";
-      alert("💥 You caught " + allCaps + " !! 🎉\n\nCheck out the Pokemon page to give your new friend a nickname \n\n\n-- refresh page to encounter another Pokemon --");
-
-      const res = await axios.post('http://localhost:8080/pokemon', {
-        pokemonNum: this.state.details.id,
-        pokemonName: this.state.details.name,
-        imageUrl: `${img}${this.state.details.id}`
-      });
-    } else {
-      alert("nope \nit got away");
-      this.componentDidMount();
-      answer.style.filter = "brightness(0%)";
-    }
   }
 
     render() {
