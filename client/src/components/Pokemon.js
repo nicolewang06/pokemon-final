@@ -7,7 +7,7 @@ class Pokemon extends Component {
     constructor(props) {
       super(props);
   
-      this.state = { data: [] }
+      this.state = { data: [], isEditToggled: false }
     }
 
     async componentDidMount() {
@@ -33,10 +33,12 @@ class Pokemon extends Component {
       }
 
       async toggleEdit() {
-        let edit = document.getElementById("myDIV");
-        let name = document.getElementById("pokemonName");
-        edit.style.display = "block";
-        name.style.display = "none";
+        // let edit = document.getElementById("myDIV");
+        // let name = document.getElementById("pokemonName");
+        // edit.style.display = "block";
+        // name.style.display = "none";
+        
+        this.setState({isEditToggled: true})
       }
 
 
@@ -88,15 +90,15 @@ class Pokemon extends Component {
                               <div id="edit" onClick={ (e) => this.toggleEdit() }>
                                 ✏️
                               </div>
-                              <div id="myDIV">
+                              { this.state.isEditToggled && <div id="myDIV">
                                 <form onSubmit={ (e) => this.handleEditSubmit(e) }>
                                   <input id="nickname" type="text" size="10" defaultValue={data.pokemonName}/>
                                   <input type="submit" value="update" />
                                 </form>
-                              </div>
-                              <div id="pokemonName">
+                              </div>}
+                             { !this.state.isEditToggled && <div id="pokemonName">
                                   {data.nickname ? data.nickname : data.pokemonName}
-                              </div>
+                              </div>}
                           </div>
                       </div>
                   </div>

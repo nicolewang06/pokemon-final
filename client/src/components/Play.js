@@ -22,7 +22,7 @@ class Play extends React.Component {
       const random = Math.floor(Math.random() * 899)
         const res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${random}`);
         const pNames = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=899');
-        this.setState({ details: res.data })
+        this.setState({ details: res.data, testing: pNames.data })
     } catch(err) {
         console.error(err.message);
     }
