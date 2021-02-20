@@ -32,14 +32,6 @@ class Pokemon extends Component {
         }
       }
 
-      async toggleEdit() {
-        // let edit = document.getElementById("myDIV");
-        // let name = document.getElementById("pokemonName");
-        // edit.style.display = "block";
-        // name.style.display = "none";
-        
-        this.setState({isEditToggled: true})
-      }
 
 
       //const [selectedPokemon, setSelectedPokemon] = useState(null);
@@ -76,12 +68,43 @@ class Pokemon extends Component {
             <div className="pokemonCardContainer">  
               {
               this.state.data && this.state.data.map(data => (
+                  <SinglePokemon data = {data} />
                   
-                  <div className="pokemonCard" key={data.id}>  
+              ))
+              }
+            </div>
+        </div>
+      )
+    }
+}
+
+class SinglePokemon extends Component{
+  constructor(props){
+    super(props)
+
+    this.state = {isEditToggled: false}
+  }
+
+
+  async toggleEdit() {
+    // let edit = document.getElementById("myDIV");
+    // let name = document.getElementById("pokemonName");
+    // edit.style.display = "block";
+    // name.style.display = "none";
+    
+    this.setState({isEditToggled: true})
+
+  }
+
+
+  render(){
+    return(
+
+      <div className="pokemonCard" key={this.props.data.id}>  
                       <div className="pokemonBackground" >
-                          <form><div id="delete" onClick={ (e) => this.deletePokemon(data.id) }>❌</div></form>
-                          <img id="pokemonImage" src= {data.imageUrl + ".png"} alt="" width="150px" />
-                          <div id="pokemonNum">#{data.pokemonNum}</div>
+                          <form><div id="delete" onClick={ (e) => this.deletePokemon(this.data.id) }>❌</div></form>
+                          <img id="pokemonImage" src= {this.props.data.imageUrl + ".png"} alt="" width="150px" />
+                          <div id="pokemonNum">#{this.props.data.pokemonNum}</div>
                       </div> 
 
                       <div className="pokemonContent">
@@ -92,22 +115,19 @@ class Pokemon extends Component {
                               </div>
                               { this.state.isEditToggled && <div id="myDIV">
                                 <form onSubmit={ (e) => this.handleEditSubmit(e) }>
-                                  <input id="nickname" type="text" size="10" defaultValue={data.pokemonName}/>
+                                  <input id="nickname" type="text" size="10" defaultValue={this.props.data.pokemonName}/>
                                   <input type="submit" value="update" />
                                 </form>
                               </div>}
                              { !this.state.isEditToggled && <div id="pokemonName">
-                                  {data.nickname ? data.nickname : data.pokemonName}
+                                  {this.props.data.nickname ? this.props.data.nickname : this.props.data.pokemonName}
                               </div>}
                           </div>
                       </div>
                   </div>
-              ))
-              }
-            </div>
-        </div>
-      )
-    }
+
+    )
+  }
 }
 
 export default Pokemon
