@@ -36,7 +36,7 @@ class About extends Component{
             <div className="aboutTitles">Pok&#233;mon</div><br></br>
               <div className="aboutContents">
                 <ul>
-                  <li>Click pencil icon ✏️ to edit Pokemon name with a nickname</li><br></br>
+                  <li>Click pencil icon ✏️ to edit Pok&#233;mon name with a nickname</li><br></br>
                   <li>Click ❌ to "release" &#40;delete&#41; your Pok&#233;mon back in the wild</li><br></br>
                   <li>Gotta catch 'em all !!<br></br>How many Pok&#233;mon can you "catch" from the Play page ?</li>
                 </ul>
