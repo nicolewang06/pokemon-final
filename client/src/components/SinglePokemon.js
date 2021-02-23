@@ -9,29 +9,28 @@ class SinglePokemon extends Component{
     constructor(props){
       super(props)
   
-        this.state = {
-            nickname: this.props.data.nickname,
-            isEditToggled: false
-        }
+      this.state = {
+          nickname: this.props.data.nickname,
+          isEditToggled: false
+      }
       this.selectPokemon = this.selectPokemon.bind(this)
       this.submitEditedPokemon = this.submitEditedPokemon.bind(this)
       this.editPokemon = this.editPokemon.bind(this)
     //   this.selectedPokemon = this.selectedPokemon.bind(this)
     }
   
-    selectPokemon(selectedPokemon) {
-      this.setState ( { selectedPokemon, isEditToggled:true } );
+    selectPokemon() {
+      this.setState ( { isEditToggled:true } );
       !this.state.isEditToggled ? this.setState({isEditToggled: true}) : this.setState({isEditToggled: false});
   
       //console.log(wine);
     }
   
     editPokemon(e) {
-        const { name, value } = e.target;
-        this.setState( { 
-            nickname: value,
-            ...this.state
-        } );
+        const { nickname, value } = e.target;
+        this.setState({ 
+            nickname: value
+        });
       //console.log(e.target.value);
     }
   
@@ -44,7 +43,7 @@ class SinglePokemon extends Component{
     //   !this.state.isEditToggled ? this.setState({isEditToggled: true}) : this.setState({isEditToggled: false});
   
     // }
-    async submitEditedPokemon(e) {
+  async submitEditedPokemon() {
       //alert("refresh page to see changes")
       //e.preventDefault();
       // const nickname = document.getElementById("nickname").value;
@@ -56,18 +55,21 @@ class SinglePokemon extends Component{
     //   const {nickname} = this.state;
     //   const pokemon = {nickname};
   
-        try {
-        const res = await axios.patch(deploySite, {
-            "nickname": this.state.nickname
-        });
-        this.setState({
-            data: res.data, isEditToggled: false
-        });
-        //window.location.reload(false);
-        } catch(e) {
-            console.error(e, e.message);
-        }
+    try {
+
+      
+      const res = await axios.post(deploySite, {
+        id: this.props.data.id,
+        nickname: this.state.nickname
+      });
+      this.setState({
+        isEditToggled: false
+      });
+      
+    } catch(e) {
+      console.error(e, e.message);
     }
+  }
   
   
     render(){
@@ -75,11 +77,10 @@ class SinglePokemon extends Component{
   
         <div className="pokemonCard" key={this.props.data.id}>  
           <div className="pokemonBackground" >
-              <form><div id="delete" onClick={ (e) => this.props.deletePokemon(this.props.data.id) }>❌</div></form>
+              <form><div id="delete" onClick={ () => this.props.deletePokemon(this.props.data.id) }>❌</div></form>
               <img id="pokemonImage" src= {this.props.data.imageUrl + ".png"} alt="" width="150px" />
               <div id="pokemonNum">#{this.props.data.pokemonNum}</div>
           </div> 
-  
           <div className="pokemonContent">
               <div id="pokemonNameContent">
                   <div id="edit" onClick={ () => this.selectPokemon() }>

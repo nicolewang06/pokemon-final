@@ -5,7 +5,7 @@ import SinglePokemon from './SinglePokemon'
 
 
 //const img = "https://pokeres.bastionbot.org/images/pokemon/"
-const deploySite = "http://localhost:8080/pokemon"
+const deploySite = "http://localhost:8080/pokemon/"
 // const deploySite = "https://fast-falls-09879.herokuapp.com/pokemon/"
 
 
@@ -13,7 +13,7 @@ class Pokemon extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { data: [], isEditToggled: false, selectedTest: []}
+    this.state = { data: [], isEditToggled: false }
     this.deletePokemon = this.deletePokemon.bind(this)
     this.handleChange = this.handleChange.bind(this)
     
@@ -21,6 +21,7 @@ class Pokemon extends Component {
   }
 
   async componentDidMount() {
+    // bfre page loads, have this ready
     try{
       const {data} = await axios.get(deploySite)
       this.setState ( { data: data } )
@@ -32,12 +33,13 @@ class Pokemon extends Component {
 
   async deletePokemon(id) {
     try {
-      const res = await axios.delete(deploySite + id);
+      await axios.delete(deploySite + id);
       //console.log(res.data);
       //alert("we'll meet again");
-      const updateRes = await axios.get(deploySite);
-        this.setState({ data: updateRes.data});
-        console.log(this.state.data)
+      // const {data} = await axios.get(deploySite)
+      // this.setState ( { data: data } )
+      // console.log(this.state.data)
+      window.location.reload(false);
     } catch(e) {
       console.error(e, e.message);
     }
@@ -61,12 +63,12 @@ class Pokemon extends Component {
     return(
       <div id = "holder">
         <div className="pokemonCardContainer">  
-          {this.state.data && this.state.data.map(data => (
+          {/* {this.state.data && this.state.data.map(data => (
             <div>
               <SinglePokemon data={data} deletePokemon={this.deletePokemon} submitEditedPokemon={this.submitEditedPokemon } />
             </div>))
-          }
-          {/* <Testing /> */}
+          } */}
+          <Testing deletePokemon={this.deletePokemon}/>
         </div>
       </div>
     )
