@@ -1,7 +1,9 @@
 import React, {Component, useEffect, useState} from 'react'
 import axios from 'axios'
 
-const deploySite = "https://fast-falls-09879.herokuapp.com/pokemon/"
+//const deploySite = "https://fast-falls-09879.herokuapp.com/pokemon/"
+const deploySite = "http://localhost:8080/pokemon/"
+
 
 class SinglePokemon extends Component{
     constructor(props){
