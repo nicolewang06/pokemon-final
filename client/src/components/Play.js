@@ -2,7 +2,7 @@ import React from 'react'
 import axios from 'axios'
 
 const img = "https://pokeres.bastionbot.org/images/pokemon/"
-const deploySite = "https://fast-falls-09879.herokuapp.com/"
+const deploySite = "https://fast-falls-09879.herokuapp.com/pokemon"
 
 class Play extends React.Component {
     
