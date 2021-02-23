@@ -2,75 +2,74 @@ import React, {Component, useEffect, useState} from 'react'
 import axios from 'axios'
 
 //const img = "https://pokeres.bastionbot.org/images/pokemon/"
+const deploySite = "https://fast-falls-09879.herokuapp.com/"
 
 class Pokemon extends Component {
-    constructor(props) {
-      super(props);
-  
-      this.state = { data: [], isEditToggled: false}
-      this.deletePokemon = this.deletePokemon.bind(this)
+  constructor(props) {
+    super(props);
 
-      this.handleChange = this.handleChange.bind(this)
+    this.state = { data: [], isEditToggled: false, selectedTest: []}
+    this.deletePokemon = this.deletePokemon.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+    
+    this.selectPokemon = this.selectPokemon.bind(this);
+}
+
+  async componentDidMount() {
+    try{
+    const {data} = await axios.get('http://localhost:8080/pokemon')
+    this.setState ( { data: data } )
+    //console.log(data)
+  } catch(error) {
+    console.error(error.message);
+  }
+}
+
+async deletePokemon(id) {
+    try {
+      const res = await axios.delete('http://localhost:8080/pokemon/' + id);
+      //console.log(res.data);
+      //alert("we'll meet again");
+      const updateRes = await axios.get('http://localhost:8080/pokemon/');
+        this.setState({ data: updateRes.data});
+        console.log(this.state.data)
+    } catch(e) {
+      console.error(e, e.message);
     }
+  }
 
-    async componentDidMount() {
-      try{
-      const {data} = await axios.get('http://localhost:8080/pokemon')
-      this.setState ( { data: data } )
-      //console.log(data)
-    } catch(error) {
-      console.error(error.message);
-    }
-    }
+  selectPokemon(selectedPokemon) {
+    this.setState ( { selectedPokemon, isEditToggled:true } );
+    !this.state.isEditToggled ? this.setState({isEditToggled: true}) : this.setState({isEditToggled: false});
 
-    async deletePokemon(id) {
-        try {
-          const res = await axios.delete('http://localhost:8080/pokemon/' + id);
-          //console.log(res.data);
-          //alert("we'll meet again");
-          const updateRes = await axios.get('http://localhost:8080/pokemon/');
-            this.setState({ data: updateRes.data});
-            console.log(this.state.data)
-        } catch(e) {
-          console.error(e, e.message);
-        }
-      }
+    //console.log(wine);
+  }
 
-      handleChange(e){
-        /*  DESTRUCTING >>
-        e.target.name
-        e.target.value */    
-        const { nickname, value } = e.target;
-        //console.log(name, value)
-        this.setState( { [nickname]: value } )
-      }
-
-
-
-
-
-      
-
-    render() {
-
-      
-
-      return(
-        <div id = "holder">
-            <div className="pokemonCardContainer">  
-              {
-              this.state.data && this.state.data.map(data => (
-      <SinglePokemon data = {data} deletePokemon = {this.deletePokemon} submitEditedWine = {this.submitEditedWine } />
-                  
-                  
-              ))
-              }
-              <button onClick={ () => this.selectWine(this.props.data) }>Edit Wine</button>
-              <Wines />
-            </div>
+  handleChange(e){
+    /*  DESTRUCTING >>
+    e.target.name
+    e.target.value */    
+    const { nickname, value } = e.target;
+    //console.log(name, value)
+    this.setState( { [nickname]: value } )
+  }
+render() {
+  return(
+    <div id = "holder">
+        <div className="pokemonCardContainer">  
+          {
+          this.state.data && this.state.data.map(data => (
+            <div>
+  <SinglePokemon data = {data} deletePokemon = {this.deletePokemon} submitEditedWine = {this.submitEditedWine } />  
+  <button onClick={ () => this.selectPokemon(data) }>Edit Test</button>
+</div>
+          ))
+          }
+          <Testing />
         </div>
-      )
-    }
+    </div>
+  )
+}
 }
 
 
@@ -81,21 +80,21 @@ class SinglePokemon extends Component{
     super(props)
 
     this.state = {isEditToggled: false}
-    this.selectWine = this.selectWine.bind(this)
-    this.submitEditedWine = this.submitEditedWine.bind(this)
-    this.editWine = this.editWine.bind(this)
+    this.selectPokemon = this.selectPokemon.bind(this)
+    this.submitEditedPokemon = this.submitEditedPokemon.bind(this)
+    this.editPokemon = this.editPokemon.bind(this)
   }
 
-  selectWine(selectedWine) {
-    this.setState ( { selectedWine } );
+  selectPokemon(selectedPokemon) {
+    this.setState ( { selectedPokemon, isEditToggled:true } );
     !this.state.isEditToggled ? this.setState({isEditToggled: true}) : this.setState({isEditToggled: false});
 
     //console.log(wine);
   }
 
-  editWine(e) {
+  editPokemon(e) {
     const { name, value } = e.target;
-    this.setState( { ...this.state, selectedWine: { ...this.state.selectedWine, [name]: value } } );
+    this.setState( { ...this.state, selectedPokemon: { ...this.state.selectedPokemon, [name]: value } } );
     //console.log(e.target.value);
   }
 
@@ -108,8 +107,7 @@ class SinglePokemon extends Component{
   //   !this.state.isEditToggled ? this.setState({isEditToggled: true}) : this.setState({isEditToggled: false});
 
   // }
-
-  async submitEditedWine(e) {
+  async submitEditedPokemon(e) {
     //alert("refresh page to see changes")
     //e.preventDefault();
     // const nickname = document.getElementById("nickname").value;
@@ -119,11 +117,11 @@ class SinglePokemon extends Component{
     // when editing 2nd , 1st changes (array thing)
     //
     const {nickname } = this.state;
-    const wine = {nickname};
+    const pokemon = {nickname};
 
     try {
-        const editedWine = this.state.selectedWine;
-        const res = await axios.patch('http://localhost:8080/pokemon/', editedWine);
+        const editedPokemon = this.state.selectedPokemon;
+        const res = await axios.patch('http://localhost:8080/pokemon/', editedPokemon);
         const updateRes = await axios.get('http://localhost:8080/pokemon/');
         this.setState({ data: updateRes.data, isEditToggled: false});
         //window.location.reload(false);
@@ -131,6 +129,7 @@ class SinglePokemon extends Component{
         console.error(e, e.message);
       }
   }
+
 
   render(){
     return(
@@ -144,12 +143,12 @@ class SinglePokemon extends Component{
 
         <div className="pokemonContent">
             <div id="pokemonNameContent">
-                <div id="edit" onClick={ (e) => this.selectWine() }>
+                <div id="edit" onClick={ () => this.selectPokemon() }>
                   ✏️
                 </div>
-                { this.state.isEditToggled && this.state.selectedWine &&
-                  <form  onChange={ this.editWine} onSubmit = { this.submitEditedWine } >
-                    <input id="nickname" type="text" size="10" defaultValue={this.props.data.pokemonName}/>
+                { this.state.isEditToggled && this.state.selectedPokemon &&
+                  <form  onChange={ this.editPokemon} onSubmit = { this.submitEditedPokemon } >
+                    <input id="nickname" type="text" size="10" defaultValue={this.state.selectedPokemon.pokemonName}/>
                     <input type="submit" value="update"/>
                   </form>
                 }
@@ -163,146 +162,112 @@ class SinglePokemon extends Component{
     )
   }
 }
-const WINES_URL = 'http://myapi-profstream.herokuapp.com/api/779738/wines/'
+
 const POKEMONURL = 'http://localhost:8080/pokemon'
-class Wines extends React.Component {
+class Testing extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {}
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.selectWine = this.selectWine.bind(this);
-    this.editWine = this.editWine.bind(this);
-    this.submitEditedWine = this.submitEditedWine.bind(this);
+    this.editTest = this.editTest.bind(this);
+    this.submitEditedTest = this.submitEditedTest.bind(this);
   }
 
-  async getWines() {
+  async getTests() {
     try {
       const res = await axios.get(POKEMONURL);
-      //console.log(res.data)
-      this.setState({ wines: res.data })
+      this.setState({ tests: res.data })
     } catch(e) {
       console.error(e);
     }
   }
   componentDidMount() {
-    this.getWines();
+    this.getTests();
   }
 
   handleChange(e){
-    /*  DESTRUCTING >>
-    e.target.name
-    e.target.value */    
     const { nickname, value } = e.target;
-    //console.log(name, value)
     this.setState( { [nickname]: value } )
   }
 
   async handleSubmit(e) {
-    //console.log('something')
-    /* DESTRUCTING >>
-    this.state.name
-    this.state.year
-    this.state.grapes */
     e.preventDefault();
     const { nickname } = this.state;
-    const wine = { nickname };
+    const test = { nickname };
     try {
-      const res = await axios.post(POKEMONURL, wine);
+      const res = await axios.post(POKEMONURL, test);
       console.log(res.data);
 
       const updateRes = await axios.get(POKEMONURL);
-      this.setState( { wines: updateRes.data } )
+      this.setState( { tests: updateRes.data } )
     } catch(e) {
       console.error (e);
     }
-    //console.log( { name, year, grapes, country, region, description, picture, price } );
-    //const lastName = "wang";
-    //console.log( { lastName })
-    // const obj = { name: 'nicole', lastName: "wang" }
   }
 
-  async handleDelete(id) {
-    console.log(WINES_URL + id);
-    try{
-      const res = await axios.delete(WINES_URL + id); // target wine id
-      console.log(res.data);
-
-      const updateRes = await axios.get(WINES_URL);
-      this.setState( { wines: updateRes.data } )
-    } catch(e) {
-      console.error(e.message)
-    }
+  selectTest(selectedTest) {
+    this.setState ( { selectedTest } );
   }
 
-  selectWine(selectedWine) {
-    this.setState ( { selectedWine } );
-    //console.log(wine);
-  }
 
-  editWine(e) {
+  editTest(e) {
     const { name, value } = e.target;
-    this.setState( { ...this.state, selectedWine: { ...this.state.selectedWine, [name]: value } } );
-    //console.log(e.target.value);
+    this.setState( { ...this.state, selectedTest: { ...this.state.selectedTest, [name]: value } } );
   }
 
-  async submitEditedWine(e) {
+  async submitEditedTest(e) {
     e.preventDefault();
     try {
-      const editedWine = this.state.selectedWine; // this obj has an id
-      console.log(editedWine)
-      // to send our patch to url + /id
-      //const focusWine = WINES_URL + editedWine.id
-      const res = await axios.patch(POKEMONURL, editedWine);
+      const editedTest = this.state.selectedTest; 
+      console.log(editedTest)
+      const res = await axios.patch(POKEMONURL, editedTest);
 
       const resRefresh = await axios.get(POKEMONURL);
-      this.setState( { wines: resRefresh.data } );
+      this.setState( { tests: resRefresh.data } );
     } catch(e) {
       console.error(e);
     }
   }
 
+
+
   render() {
     return (
-      <div className="wines">
-        <ul>
-          {/* render info */}
+      
+        <div className="pokemonCardTest">
           {
-            this.state.wines && this.state.wines.map(wine => (
-              <li key={ wine.id }>
-                { wine.nickname } //
-                { wine.pokemonName }: # { wine.pokemonNum }
-                <button onClick={ () => this.handleDelete(wine.id) }>Delete wine</button>
-                <button onClick={ () => this.selectWine(wine) }>Edit Wine</button>
-              </li>
+            this.state.tests && this.state.tests.map(test => (
+              <div className="pokemonBackgroundTest" key={ test.id }>
+                <img id="pokemonImage" src= {test.imageUrl + ".png"} alt="" width="150px" />
+                <div id="pokemonNumTest">#{test.pokemonNum}</div>
+                <div className="pokemonContent">
+
+                  <div id="pokemonNameContent">
+                  <div id="delete" onClick={ () => this.deletePokemon(test.id) }>❌</div>
+                 { console.log(test.id)}
+                  <div id="edit" onClick={ () => this.selectTest(test) }>✏️</div>
+                  </div >
+                </div>
+                { !this.state.isEditToggled && <div id="pokemonName">
+                    {test.nickname ? test.nickname : test.pokemonName}
+                </div>}
+                
+              </div>
               ))
           }
-        </ul>
-        <form className="new-wine-form"
-          onChange={ this.handleChange }
-          onSubmit={ this.handleSubmit }>
-          <label>
-            Wine Name:
-            <input type="text" name="nickname" />
-          </label>
-
-          <input type="submit" />
-        </form>
+       
 
         <hr></hr>
-            { /* we want to show the form */ }
-            { /* only after we select a wine */ }
-            { /* if this.state.selectedWine exists */ }
-            { /* render this form below */ }
-            { /* this.state.selectedWine && formBelow */ }
+
         { 
-        this.state.selectedWine && <form className="wine-edit-form"
-          onChange={ this.editWine}
-            onSubmit = {this.submitEditedWine}>
+        this.state.selectedTest && <form className="test-edit-form"
+          onChange={ this.editTest}
+            onSubmit = {this.submitEditedTest}>
           <label>
-            Wine Name:
-            <input type="text" name="nickname" defaultValue={ this.state.selectedWine.pokemonName } />
+            nickname:
+            <input type="text" name="nickname" defaultValue={ this.state.selectedTest.pokemonName } />
           </label>
 
           <input type="submit" />
