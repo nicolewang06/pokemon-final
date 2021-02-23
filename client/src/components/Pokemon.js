@@ -3,7 +3,7 @@ import axios from 'axios'
 
 //const img = "https://pokeres.bastionbot.org/images/pokemon/"
 const postgresDB = "http://localhost:8080/pokemon"
-const deploySite = "https://fast-falls-09879.herokuapp.com/pokemon"
+const deploySite = "https://fast-falls-09879.herokuapp.com/pokemon/"
 
 class Pokemon extends Component {
   constructor(props) {
