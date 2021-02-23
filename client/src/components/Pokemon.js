@@ -164,7 +164,7 @@ class SinglePokemon extends Component{
   }
 }
 
-const POKEMONURL = 'http://localhost:8080/pokemon'
+//const POKEMONURL = 'http://localhost:8080/pokemon'
 class Testing extends React.Component {
   constructor(props) {
     super(props);
@@ -178,7 +178,7 @@ class Testing extends React.Component {
 
   async getTests() {
     try {
-      const res = await axios.get(POKEMONURL);
+      const res = await axios.get(deploySite);
       this.setState({ tests: res.data })
     } catch(e) {
       console.error(e);
@@ -198,10 +198,10 @@ class Testing extends React.Component {
     const { nickname } = this.state;
     const test = { nickname };
     try {
-      const res = await axios.post(POKEMONURL, test);
+      const res = await axios.post(deploySite, test);
       console.log(res.data);
 
-      const updateRes = await axios.get(POKEMONURL);
+      const updateRes = await axios.get(deploySite);
       this.setState( { tests: updateRes.data } )
     } catch(e) {
       console.error (e);
@@ -223,9 +223,9 @@ class Testing extends React.Component {
     try {
       const editedTest = this.state.selectedTest; 
       console.log(editedTest)
-      const res = await axios.patch(POKEMONURL, editedTest);
+      const res = await axios.patch(deploySite, editedTest);
 
-      const resRefresh = await axios.get(POKEMONURL);
+      const resRefresh = await axios.get(deploySite);
       this.setState( { tests: resRefresh.data } );
     } catch(e) {
       console.error(e);
