@@ -2,6 +2,7 @@ import React from 'react'
 import axios from 'axios'
 
 const img = "https://pokeres.bastionbot.org/images/pokemon/"
+const deploySite = "https://fast-falls-09879.herokuapp.com/"
 
 class Play extends React.Component {
     
@@ -42,7 +43,7 @@ class Play extends React.Component {
       answer.style.filter = "brightness(100%)";
       alert("💥 You caught " + allCaps + " !! 🎉\n\nCheck out the Pokemon page to give your new friend a nickname \n\n\n-- refresh page to encounter another Pokemon --");
 
-      const res = await axios.post('http://localhost:8080/pokemon', {
+      const res = await axios.post(deploySite, {
         pokemonNum: this.state.correct.id,
         pokemonName: this.state.correct.name,
         imageUrl: `${img}${this.state.correct.id}`

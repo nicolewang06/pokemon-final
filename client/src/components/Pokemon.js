@@ -2,6 +2,7 @@ import React, {Component, useEffect, useState} from 'react'
 import axios from 'axios'
 
 //const img = "https://pokeres.bastionbot.org/images/pokemon/"
+const postgresDB = "http://localhost:8080/pokemon"
 const deploySite = "https://fast-falls-09879.herokuapp.com/"
 
 class Pokemon extends Component {
@@ -17,7 +18,7 @@ class Pokemon extends Component {
 
   async componentDidMount() {
     try{
-    const {data} = await axios.get('http://localhost:8080/pokemon')
+    const {data} = await axios.get(deploySite)
     this.setState ( { data: data } )
     //console.log(data)
   } catch(error) {
@@ -27,10 +28,10 @@ class Pokemon extends Component {
 
 async deletePokemon(id) {
     try {
-      const res = await axios.delete('http://localhost:8080/pokemon/' + id);
+      const res = await axios.delete(deploySite + id);
       //console.log(res.data);
       //alert("we'll meet again");
-      const updateRes = await axios.get('http://localhost:8080/pokemon/');
+      const updateRes = await axios.get(deploySite);
         this.setState({ data: updateRes.data});
         console.log(this.state.data)
     } catch(e) {
@@ -121,8 +122,8 @@ class SinglePokemon extends Component{
 
     try {
         const editedPokemon = this.state.selectedPokemon;
-        const res = await axios.patch('http://localhost:8080/pokemon/', editedPokemon);
-        const updateRes = await axios.get('http://localhost:8080/pokemon/');
+        const res = await axios.patch(deploySite, editedPokemon);
+        const updateRes = await axios.get(deploySite);
         this.setState({ data: updateRes.data, isEditToggled: false});
         //window.location.reload(false);
       } catch(e) {
