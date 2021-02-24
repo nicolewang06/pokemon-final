@@ -1,6 +1,5 @@
-import React, { Component, useEffect, useState } from 'react'
+import React, { Component } from 'react'
 import axios from 'axios'
-import Testing from './Testing'
 import SinglePokemon from './SinglePokemon'
 
 
@@ -16,6 +15,7 @@ class Pokemon extends Component {
     this.state = { data: [], isEditToggled: false }
     this.deletePokemon = this.deletePokemon.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.updatePokemon = this.updatePokemon.bind(this)
     
     // this.selectPokemon = this.selectPokemon.bind(this);
   }
@@ -45,6 +45,16 @@ class Pokemon extends Component {
     }
   }
 
+  async updatePokemon(editedPokemon) {
+    await axios.patch(deploySite, editedPokemon);
+    const res = await axios.get(deploySite);
+    this.setState( {
+      ...this.state,
+      data: res.data,
+      isEditToggled: false
+    });
+  }
+
   // selectPokemon(selectedPokemon) {
   //   this.setState ( { selectedPokemon, isEditToggled: true } );
   //   !this.state.isEditToggled ? this.setState({isEditToggled: true}) : this.setState({isEditToggled: false});
@@ -59,16 +69,19 @@ class Pokemon extends Component {
     //console.log(name, value)
     this.setState( { [nickname]: value } )
   }
+
   render() {
+    const pokemonList = [...this.state.data]
+    pokemonList.sort((a, b) => a.pokemonNum - b.pokemonNum)
     return(
       <div id = "holder">
-        <div className="pokemonCardContainer">  
-          {/* {this.state.data && this.state.data.map(data => (
+        <div className="pokemonCardContainer">
+          {this.state.data && pokemonList.map(data => 
             <div>
-              <SinglePokemon data={data} deletePokemon={this.deletePokemon} submitEditedPokemon={this.submitEditedPokemon } />
-            </div>))
-          } */}
-          <Testing deletePokemon={this.deletePokemon}/>
+              <SinglePokemon data={data} updatePokemon={this.updatePokemon} deletePokemon={this.deletePokemon} submitEditedPokemon={this.submitEditedPokemon } />
+            </div>)
+          }
+          {/* <Testing deletePokemon={this.deletePokemon}/> */}
         </div>
       </div>
     )

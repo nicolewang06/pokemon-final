@@ -280,10 +280,29 @@ a:hover{
   font-size: larger;
 }
 
-/* #myDIV{
-  display: none;
-} */
+.pokemon-edit-form {
+  font-size: small;
+}
 
+#update{
+  padding: 5px;
+  border-radius: 10px;
+  background-color: silver;
+}
+
+#update:hover{
+  cursor: crosshair;
+  background-color: white;
+}
+
+#nicknameTB{
+  height: 25px;
+  text-align: center;
+}
+
+#label{
+  font-size: medium;
+}
 
 /* ------------------------------------ POKEDEX -------------------------------------> */
 .pokedexPageContainer {
