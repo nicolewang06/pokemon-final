@@ -8,7 +8,7 @@ class MyPokemon extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {}
+    this.state = {isEditToggled:false}
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.editPokemon = this.editPokemon.bind(this);
@@ -48,8 +48,10 @@ class MyPokemon extends React.Component {
     }
   }
   
-  selectTest(selectedPokemon) {
-    this.setState ( { selectedPokemon } );
+  selectPokemon(selectedPokemon) {
+    this.setState ( { selectedPokemon, isEditToggled:true } );
+    !this.state.isEditToggled ? this.setState({isEditToggled: true}) : this.setState({isEditToggled: false});
+
   }
   
   editPokemon(e) {
@@ -70,30 +72,34 @@ class MyPokemon extends React.Component {
 
   render() {
     return (
-      <div className="pokemonCardTest">
-          <div className="pokemonBackgroundTest" key={ this.props.data.id }>
+      <div className="pokemonCard">
+        <div className="pokemonBackground" key={ this.props.data.id }>
+          <div id="delete" onClick={ () => this.props.deletePokemon(this.props.data.id) }>❌</div>
             <img id="pokemonImage" src= {this.props.data.imageUrl + ".png"} alt="" width="150px" />
-            <div id="pokemonNumTest">#{this.props.data.pokemonNum}</div>
+            <div id="pokemonNum">#{this.props.data.pokemonNum}</div>
               <div className="pokemonContent">
                 <div id="pokemonNameContent">
-                <div id="delete" onClick={ () => this.props.deletePokemon(this.props.data.id) }>❌</div>
-                <div id="edit" onClick={ () => this.selectTest(this.props.data) }>✏️</div>
-                </div >
-              </div>
-            <div id="pokemonName">
+                
+                <div id="edit" onClick={ () => this.selectPokemon(this.props.data) }>✏️</div>
+                <div id="pokemonName">
                 {this.props.data.nickname ? this.props.data.nickname : this.props.data.pokemonName}
-            </div>
-          </div>
-      <hr></hr>
-        {this.state.selectedPokemon && <form className="pokemon-edit-form"
-          onChange={ this.editPokemon}
-          onSubmit = {this.sendEditedPokemon}>
-          <label>
-            nickname:
-            <input type="text" name="nickname" defaultValue={ this.state.selectedPokemon.pokemonName } />
-          </label>
-          <input type="submit" />
-        </form>}
+            
+          
+
+        {
+          this.state.selectedPokemon && this.state.isEditToggled && 
+            <form
+              className="pokemon-edit-form"
+              onChange={ this.editPokemon}
+              onSubmit = {this.sendEditedPokemon}>
+                <input type="text" name="nickname" placeholder="enter nickname" />
+                <br></br><input id="updateBtn" type="submit" value="update name" />
+            </form>
+        }
+</div>
+                </div>
+              </div>
+      </div>
       </div>
     )
   }
