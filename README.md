@@ -5,8 +5,7 @@ API's are a collection of data that can be very long and difficult to read. Usin
 Anyone who loves Pokemon and wants to see how I made a full stack CRUD app using Postgresql, React and Springboot as the server.
 
 ## Link To Deployed App:
-[http://tranquil-fear.surge.sh/]
-(http://tranquil-fear.surge.sh/)
+[http://tranquil-fear.surge.sh/](http://tranquil-fear.surge.sh/)
 
 ## Wireframe:
 <img src="./images/p3_wireframe.png" alt="wireframe" />
